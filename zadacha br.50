@@ -1,0 +1,70 @@
+//Zagorac Kristina INKI826
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <fstream>
+
+using namespace std;
+
+//daden string koj treba da se pretvori vo ascii kod, da s sortira i ispechati vo vid na vektor
+const string favvPart = "INKI826 Kristina Arctic Monkeys In my imagination you are waiting lying on your side With your hands between your thighs";
+
+int najgolemaCifra(int value)
+{
+    int max = 0;
+    while (value > 0)
+    {
+        int remains = value % 10;
+        if (remains > max)
+            max = remains;
+        value /= 10;
+    }
+    return max;
+}
+
+int main()
+{
+//Vnesuvanje na soodvetniot indeks
+    int brojche = 0;
+    bool isInputValid = false;
+    do
+    {
+        cout << "\nVnesi go tvojot indeks: ";
+        cin >> brojche;
+        isInputValid = brojche >= 100 and brojche < 999;
+        if (isInputValid)
+{
+            cout << "Tvojot indeks e: INKI" << brojche << "\n";
+        }
+        else
+            {
+                cout << "Pogreshen broj. Vnesi povtorno!\n";
+            }
+
+    }
+     while (!isInputValid);
+
+//naogjanje na najgolemata cifra
+    const int max = najgolemaCifra(brojche);
+
+//konvektiranje na dadeniot string zgolemuvajkji go sekoj karakter spored najgolemata cifra, vo sluchajov so brojot 8
+    vector<char> textVector;
+    for (char const& c :favvPart) {
+        char chInc = (char)(c + max);
+        textVector.push_back(chInc);
+    }
+
+//sortiranje na vektorot
+    sort(textVector.begin(), textVector.end());
+
+//pechatenje na sortiraniot vektor i smestuvanje vo papkata
+    std::ofstream output_file("INKI826.Project3");
+
+    for (const char& c : textVector) {
+        cout << c;
+        output_file << c;
+    };
+    cout << "\n";
+    output_file.close();
+}
